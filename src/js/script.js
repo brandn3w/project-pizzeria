@@ -52,16 +52,10 @@
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
 
-  const app = {
-    init: function(){
-      const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
-    },
-  };
+  class Product{
+    constructor(){
+      const thisProduct = this;
 
-  app.init();
-}
+      console.log('new Product:', thisProduct);
+    }
+  }
