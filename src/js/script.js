@@ -53,14 +53,14 @@ const templates = {
 class Product {
   constructor(id, data) {
     const thisProduct = this;
-    thisProduct.id=id;
-    thisProduct.data=data;
+    thisProduct.id = id;
+    thisProduct.data = data;
     thisProduct.renderInMenu();
     thisProduct.initAccordion();
     console.log('new product', thisProduct);
   }
 
-  renderInMenu(){
+  renderInMenu() {
     const thisProduct = this;
 
     /* generate HTML based on template */
@@ -74,48 +74,48 @@ class Product {
     menuContainer.appendChild(thisProduct.element);
   }
 
-  initAccordion(){
+  initAccordion() {
     const thisProduct = this;
-    
+
+
     /* find the clickable trigger (the element that should react to clicking) */
-clickedElement = thisProduct.element;//???
+    let clickedElement = thisProduct.element.querySelector(select.menuProduct.clickable);//???
     /* START: click event listener to trigger */
-clickedElement.addEvenetListener('click', function(event)){
-  console.log('clicked element', clickedElement);
+    clickedElement.addEventListener('click', function (event) {
+      console.log('clicked element', clickedElement);
       /* prevent default action for event */
       event.preventDefault();
       /* toggle active class on element of thisProduct */
-thisProduct.element.classList.toggle('active');
+      thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
       /* find all active products */
-      const activeProducts = document.querySelectorAll('.active');
+      const activeProducts = document.querySelectorAll(select.all.menuProductsActive);
       console.log('found active products: ', activeProducts);
       /* START LOOP: for each active product */
-for (let activeProduct of activeProducts){
+      for (let activeProduct of activeProducts) {
         /* START: if the active product isn't the element of thisProduct */
-if (activeProduct !== clickedElement)
+        if (activeProduct !== thisProduct.element) {
           /* remove class active for the active product */
-activeProduct.classList.remove('active');
-        /* END: if the active product isn't the element of thisProduct */
-}
-      /* END LOOP: for each active product */
-}
-    /* END: click event listener to trigger */
-});
+          activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+          /* END: if the active product isn't the element of thisProduct */
+        }
+        /* END LOOP: for each active product */
+      }
+      /* END: click event listener to trigger */
+    });
   }
 }
-
 
 const app = {
   initMenu: function () {
     const thisApp = this;
     console.log('thisApp.data', thisApp.data);
-    for (let productData in thisApp.data.products){   //nowa instancja dla kazdego produktu
+    for (let productData in thisApp.data.products) {   //nowa instancja dla kazdego produktu
       new Product(productData, thisApp.data.products[productData]);
     }
   },
 
-  initData: function(){
-    const thisApp= this;
+  initData: function () {
+    const thisApp = this;
 
     thisApp.data = dataSource;
   },
@@ -130,7 +130,7 @@ const app = {
 
     thisApp.initData();
 
-    console.log('thisApp.data:',thisApp.data);
+    console.log('thisApp.data:', thisApp.data);
 
     thisApp.initMenu();
   },
