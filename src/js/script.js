@@ -56,7 +56,10 @@ class Product {
     thisProduct.id = id;
     thisProduct.data = data;
     thisProduct.renderInMenu();
+    thisProduct.getElements();
     thisProduct.initAccordion();
+    thisProduct.initOrderForm();
+    thisProduct.processOrder();
     console.log('new product', thisProduct);
   }
 
@@ -74,12 +77,22 @@ class Product {
     menuContainer.appendChild(thisProduct.element);
   }
 
+  getElements(){
+    const thisProduct = this;
+  
+    thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+    thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+    thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+    thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+    thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+  }
+
   initAccordion() {
     const thisProduct = this;
 
 
     /* find the clickable trigger (the element that should react to clicking) */
-    let clickedElement = thisProduct.element.querySelector(select.menuProduct.clickable);//???
+    let clickedElement = thisProduct.element.querySelector(select.menuProduct.clickable);
     /* START: click event listener to trigger */
     clickedElement.addEventListener('click', function (event) {
       console.log('clicked element', clickedElement);
@@ -102,6 +115,33 @@ class Product {
       }
       /* END: click event listener to trigger */
     });
+  }
+
+  initOrderForm(){
+
+  const thisProduct = this;
+  console.log(initOrderForm);
+
+  thisProduct.form.addEventListener('submit', function(event){
+    event.preventDefault();
+    thisProduct.processOrder();
+  });
+  
+  for(let input of thisProduct.formInputs){
+    input.addEventListener('change', function(){
+      thisProduct.processOrder();
+    });
+  }
+  
+  thisProduct.cartButton.addEventListener('click', function(event){
+    event.preventDefault();
+    thisProduct.processOrder();
+  });
+  }
+
+  processOrder(){
+const thisProduct=this;
+console.log(processOrder);
   }
 }
 
