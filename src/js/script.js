@@ -58,8 +58,6 @@ class Product {
     thisProduct.renderInMenu();
     thisProduct.getElements();
     thisProduct.initAccordion();
-    thisProduct.initOrderForm();
-    thisProduct.processOrder();
     console.log('new product', thisProduct);
   }
 
@@ -92,7 +90,7 @@ class Product {
 
 
     /* find the clickable trigger (the element that should react to clicking) */
-    let clickedElement = thisProduct.element.querySelector(select.menuProduct.clickable);
+    let clickedElement = thisProduct.accordionTrigger;
     /* START: click event listener to trigger */
     clickedElement.addEventListener('click', function (event) {
       console.log('clicked element', clickedElement);
@@ -117,11 +115,10 @@ class Product {
     });
   }
 
-  initOrderForm(){
 
+initOrderForm() {
   const thisProduct = this;
-  console.log(initOrderForm);
-
+  console.log(thisProduct);
   thisProduct.form.addEventListener('submit', function(event){
     event.preventDefault();
     thisProduct.processOrder();
@@ -137,14 +134,13 @@ class Product {
     event.preventDefault();
     thisProduct.processOrder();
   });
-  }
-
-  processOrder(){
-const thisProduct=this;
-console.log(processOrder);
-  }
 }
 
+processOrder(){
+const thisProduct = this;
+console.log(thisProduct);
+}
+}
 const app = {
   initMenu: function () {
     const thisApp = this;
@@ -169,8 +165,6 @@ const app = {
     console.log('templates:', templates);
 
     thisApp.initData();
-
-    console.log('thisApp.data:', thisApp.data);
 
     thisApp.initMenu();
   },
