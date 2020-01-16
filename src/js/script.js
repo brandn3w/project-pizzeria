@@ -116,30 +116,49 @@ class Product {
   }
 
 
-initOrderForm() {
-  const thisProduct = this;
-  console.log(thisProduct);
-  thisProduct.form.addEventListener('submit', function(event){
-    event.preventDefault();
-    thisProduct.processOrder();
-  });
+  initOrderForm() {
+    const thisProduct = this;
+    console.log(thisProduct);
+    thisProduct.form.addEventListener('submit', function(event){
+      event.preventDefault();
+      thisProduct.processOrder();
+    });
   
-  for(let input of thisProduct.formInputs){
-    input.addEventListener('change', function(){
+    for(let input of thisProduct.formInputs){
+      input.addEventListener('change', function(){
+        thisProduct.processOrder();
+      });
+    }
+  
+    thisProduct.cartButton.addEventListener('click', function(event){
+      event.preventDefault();
       thisProduct.processOrder();
     });
   }
-  
-  thisProduct.cartButton.addEventListener('click', function(event){
-    event.preventDefault();
-    thisProduct.processOrder();
-  });
-}
 
-processOrder(){
-const thisProduct = this;
-console.log(thisProduct);
-}
+  processOrder(){
+    const thisProduct = this;
+    const formData = utils.serializeFormToObject(thisProduct.form);
+    console.log('formData', formData);
+    let price = thisProduct.data.price;
+
+    /*START LOOP: for each paramId in thisProduct.data.params*/
+for (let paramId of thisProduct.data.params){
+    /*save the element in thisProduct.data.params with key paramId as const param */
+  const param =  thisProduct.data.params.paramId;
+
+    /*START LOOP: for each optionId in param.options*/
+  for (let paramOption of dataSource.products.params.options){
+    /*check if formData has key = param key*/
+  if thisProduct.form.element = paramOption.element
+    /*check if the default option is checked */
+return 
+    /*END loop: for all param's OPTIONS*/
+  }
+/*END loop: for all PARAMS*/
+  }
+  }
+  thisProduct.priceELem = 
 }
 const app = {
   initMenu: function () {
