@@ -83,6 +83,7 @@ class Product {
     thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
     thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
     thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+    thisProduct.imageWrapper = thisProduct.element.querySelectorAll(select.menuProduct.imageWrapper);
   }
 
   initAccordion() {
@@ -142,6 +143,7 @@ class Product {
     console.log('formData', formData);
     let price = thisProduct.data.price;
 
+
     /*START LOOP: for each paramId in thisProduct.data.params*/
     for (let paramId of thisProduct.data.params) {
       /*save the element in thisProduct.data.params with key paramId as const param */
@@ -160,7 +162,7 @@ class Product {
           /*END loop: for all param's OPTIONS*/
         } else if
         /* START ELSE IF: if option is not selected and option is default */
-        (!optionSelected && option.default) {
+        (!optionSelected && option.default) {  
           /* deduct price of option from price */
           price = price - option.price;
           console.log('reduced price ', option.price);
@@ -171,6 +173,16 @@ class Product {
         console.log('final price', price);
       }
       /* END LOOP: for each optionId in param.options */
+     /* SELECTED OPTION - IMAGES have class in classNames.menuProduct.imageVisible*/
+     const allImages = thisProduct.imageWrapper('.params-options')
+      for (let image of allImages) { 
+        if (optionSelected) {
+          image.classList.add(active);
+        /* else: images lose class */
+        } else image.classList.remove(active);
+        /*end loop for images*/
+      }
+
     }
     /* END LOOP: for each paramId in thisProduct.data.params */
   }
