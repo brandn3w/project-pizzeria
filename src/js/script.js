@@ -91,7 +91,7 @@ class Product {
 
 
     /* find the clickable trigger (the element that should react to clicking) */
-    let clickedElement = thisProduct.accordionTrigger;
+    const clickedElement = thisProduct.accordionTrigger;
     /* START: click event listener to trigger */
     clickedElement.addEventListener('click', function (event) {
       console.log('clicked element', clickedElement);
@@ -141,7 +141,7 @@ class Product {
     const thisProduct = this;
     const formData = utils.serializeFormToObject(thisProduct.form);
     console.log('formData', formData);
-thisProduct.params = {};
+    thisProduct.params = {};
     let price = thisProduct.data.price;
 
 
@@ -166,31 +166,31 @@ thisProduct.params = {};
         (!optionSelected && option.default) {
           /* deduct price of option from price */
           price = price - option.price;
-          console.log('reduced price ', option.price);
-        }
+        
         /* END ELSE IF: if option is not selected and option is default */
-
-        thisProduct.priceElem.innerHTML = price;
-        console.log('final price', price);
+        }
         /* END LOOP: for each optionId in param.options */
 
         const allImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
-        /* SELECTED OPTION - IMAGES have class in classNames.menuProduct.imageVisible*/
-        if (formData[paramId].indexOf(optionId) !== -1 ) {
+        console.log('images', allImages);
+        /* start if/else: SELECTED OPTION - IMAGES have class in classNames.menuProduct.imageVisible*/
+        if (formData[paramId].indexOf(optionId) !== -1) {
           for (let image of allImages) {
             image.classList.add(classNames.menuProduct.imageVisible);
           }
-        /* else: images lose class */
+          /* else: images lose class */
         } else {
           for (let image of allImages) {
             image.classList.remove(classNames.menuProduct.imageVisible);
           }
-        /*end loop for images*/
+          /*end loop for images*/
         }
       }
     }
-  /* END LOOP: for each paramId in thisProduct.data.params */
+    /* END LOOP: for each paramId in thisProduct.data.params */
     /* set the contents of thisProduct.priceElem to be the value of variable price */
+    thisProduct.priceElem.innerHTML = price;
+        console.log('final price', price);
   }
 }
 const app = {
