@@ -190,7 +190,7 @@ class Product {
     /* END LOOP: for each paramId in thisProduct.data.params */
     /* set the contents of thisProduct.priceElem to be the value of variable price */
     thisProduct.priceElem.innerHTML = price;
-        console.log('final price', price);
+    console.log('final price', price);
   }
 }
 const app = {
