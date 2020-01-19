@@ -84,6 +84,7 @@ class Product {
     thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
     thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
     thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+    thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
   }
 
   initAccordion() {
@@ -193,6 +194,16 @@ class Product {
     console.log('final price', price);
   }
 }
+
+ /* add class for amount calculations */
+ class AmountWidget{
+  constructor(element){
+    const thisWidget = this;
+    console.log('amount widget', thisWidget);
+    console.log('constructor arguments', element);
+  }
+}
+
 const app = {
   initMenu: function () {
     const thisApp = this;
@@ -222,3 +233,4 @@ const app = {
   },
 };
 app.init();
+
