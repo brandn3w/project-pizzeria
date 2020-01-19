@@ -83,7 +83,7 @@ class Product {
     thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
     thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
     thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-    thisProduct.imageWrapper = thisProduct.element.querySelectorAll(select.menuProduct.imageWrapper);
+    thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
   }
 
   initAccordion() {
@@ -141,6 +141,7 @@ class Product {
     const thisProduct = this;
     const formData = utils.serializeFormToObject(thisProduct.form);
     console.log('formData', formData);
+thisProduct.params = {};
     let price = thisProduct.data.price;
 
 
@@ -162,7 +163,7 @@ class Product {
           /*END loop: for all param's OPTIONS*/
         } else if
         /* START ELSE IF: if option is not selected and option is default */
-        (!optionSelected && option.default) {  
+        (!optionSelected && option.default) {
           /* deduct price of option from price */
           price = price - option.price;
           console.log('reduced price ', option.price);
@@ -171,25 +172,27 @@ class Product {
 
         thisProduct.priceElem.innerHTML = price;
         console.log('final price', price);
-      }
-      /* END LOOP: for each optionId in param.options */
-     /* SELECTED OPTION - IMAGES have class in classNames.menuProduct.imageVisible*/
-     const allImages = thisProduct.imageWrapper('.params-options')
-      for (let image of allImages) { 
-        if (optionSelected) {
-          image.classList.add(active);
+        /* END LOOP: for each optionId in param.options */
+
+        const allImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
+        /* SELECTED OPTION - IMAGES have class in classNames.menuProduct.imageVisible*/
+        if (formData[paramId].indexOf(optionId) !== -1 ) {
+          for (let image of allImages) {
+            image.classList.add(classNames.menuProduct.imageVisible);
+          }
         /* else: images lose class */
-        } else image.classList.remove(active);
+        } else {
+          for (let image of allImages) {
+            image.classList.remove(classNames.menuProduct.imageVisible);
+          }
         /*end loop for images*/
+        }
       }
-
     }
-    /* END LOOP: for each paramId in thisProduct.data.params */
+  /* END LOOP: for each paramId in thisProduct.data.params */
+    /* set the contents of thisProduct.priceElem to be the value of variable price */
   }
-  /* set the contents of thisProduct.priceElem to be the value of variable price */
 }
-
-
 const app = {
   initMenu: function () {
     const thisApp = this;
