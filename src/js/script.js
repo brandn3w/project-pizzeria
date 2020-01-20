@@ -60,7 +60,6 @@ class Product {
     thisProduct.initAccordion();
     thisProduct.initOrderForm();
     thisProduct.processOrder();
-    console.log('new product', thisProduct);
   }
 
   renderInMenu() {
@@ -164,36 +163,26 @@ class Product {
           price = price + option.price;
           console.log('new price:', option.price);
           /*END loop: for all param's OPTIONS*/
-        } else if
+        }
         /* START ELSE IF: if option is not selected and option is default */
-        (!optionSelected && option.default) {
+        else if (!optionSelected && option.default) {
           /* deduct price of option from price */
           price = price - option.price;
-        /* END ELSE IF: if option is not selected and option is default */
+          /* END ELSE IF: if option is not selected and option is default */
         }
+        thisProduct.priceElem.innerHTML = price;
+        console.log('final price', price);
         /* END LOOP: for each optionId in param.options */
-        const allImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
-        console.log('images', allImages);
+        const image = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
         /* start if/else: SELECTED OPTION - IMAGES have class in classNames.menuProduct.imageVisible*/
-        if (allImages !== null) {
-          if(formData[paramId].indexOf(optionId) !== -1 ){
-          for (let image of allImages) {
-            image.classList.add(classNames.menuProduct.imageVisible);
-          }
-          /* else: images lose class */
+        if (optionSelected && image) {
+          image.classList.add(classNames.menuProduct.imageVisible);
         } else {
-          for (let image of allImages) {
-            image.classList.remove(classNames.menuProduct.imageVisible);
-          }
-          /*end loop for images*/
+          /* else: images lose class */
+          image.classList.remove(classNames.menuProduct.imageVisible);
         }
       }
     }
-    }
-    /* END LOOP: for each paramId in thisProduct.data.params */
-    /* set the contents of thisProduct.priceElem to be the value of variable price */
-    thisProduct.priceElem.innerHTML = price;
-    console.log('final price', price);
   }
 }
 
