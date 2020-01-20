@@ -58,6 +58,8 @@ class Product {
     thisProduct.renderInMenu();
     thisProduct.getElements();
     thisProduct.initAccordion();
+    thisProduct.initOrderForm();
+    thisProduct.processOrder();
     console.log('new product', thisProduct);
   }
 
@@ -154,7 +156,7 @@ class Product {
       /*START LOOP: for each optionId in param.options*/
       for (let optionId of param.options) {
         /* save the element in param.options with key optionId as const option */
-        const option = param.options.element[optionId];
+        const option = param.options[optionId];
         const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
         /*START IF: if option is selected and option is not default */
         if (optionSelected && !option.default) {
@@ -167,15 +169,14 @@ class Product {
         (!optionSelected && option.default) {
           /* deduct price of option from price */
           price = price - option.price;
-        
         /* END ELSE IF: if option is not selected and option is default */
         }
         /* END LOOP: for each optionId in param.options */
-
         const allImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
         console.log('images', allImages);
         /* start if/else: SELECTED OPTION - IMAGES have class in classNames.menuProduct.imageVisible*/
-        if (formData[paramId].indexOf(optionId) !== -1) {
+        if (allImages !== null) {
+          if(formData[paramId].indexOf(optionId) !== -1 ){
           for (let image of allImages) {
             image.classList.add(classNames.menuProduct.imageVisible);
           }
@@ -188,6 +189,7 @@ class Product {
         }
       }
     }
+    }
     /* END LOOP: for each paramId in thisProduct.data.params */
     /* set the contents of thisProduct.priceElem to be the value of variable price */
     thisProduct.priceElem.innerHTML = price;
@@ -195,14 +197,14 @@ class Product {
   }
 }
 
- /* add class for amount calculations */
- class AmountWidget{
-  constructor(element){
-    const thisWidget = this;
-    console.log('amount widget', thisWidget);
-    console.log('constructor arguments', element);
-  }
-}
+/* add class for amount calculations */
+// class AmountWidget{
+//   constructor(element){
+//     const thisWidget = this;
+//     console.log('amount widget', thisWidget);
+//     console.log('constructor arguments', element);
+//   }
+// }
 
 const app = {
   initMenu: function () {
