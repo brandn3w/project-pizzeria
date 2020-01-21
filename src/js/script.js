@@ -85,7 +85,7 @@ class Product {
     thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
     thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
     thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-    thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
+    //thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
   }
 
   initAccordion() {
@@ -105,7 +105,7 @@ class Product {
       const activeProducts = document.querySelectorAll(select.all.menuProductsActive);
       console.log('found active products: ', activeProducts);
       /* START LOOP: for each active product */
-      for (let activeProduct in activeProducts) {
+      for (let activeProduct of activeProducts) {
         /* START: if the active product isn't the element of thisProduct */
         if (activeProduct !== thisProduct.element) {
           /* remove class active for the active product */
@@ -145,11 +145,11 @@ class Product {
     console.log('formData', formData);
 
     let price = thisProduct.data.price;
+    console.log('Product initial price: ', price);
     /*START LOOP: for each paramId in thisProduct.data.params*/
     for (let paramId in thisProduct.data.params) {
       /*save the element in thisProduct.data.params with key paramId as const param */
       const param = thisProduct.data.params[paramId];
-
       /*START LOOP: for each optionId in param.options*/
       for (let optionId in param.options) {
         /* save the element in param.options with key optionId as const option */
@@ -169,17 +169,22 @@ class Product {
           /* END ELSE IF: if option is not selected and option is default */
         }
         /* END LOOP: for each optionId in param.options */
-        const image = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
+        const images = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
+        console.log('image', images);
         /* start if/else: SELECTED OPTION - IMAGES have class in classNames.menuProduct.imageVisible*/
-        if (optionSelected && image) {
-          image.classList.add(classNames.menuProduct.imageVisible);
+        if (optionSelected) {
+          for (let image of images) {
+            image.classList.add(classNames.menuProduct.imageVisible);
+          }
         } else {
           /* else: images lose class */
-          image.classList.remove(classNames.menuProduct.imageVisible);
-        }
-      }
+          for (let image of images) {
+            image.classList.remove(classNames.menuProduct.imageVisible);
+          }
     }
     thisProduct.priceElem.innerHTML = price;
+  }
+}
   }
 }
 
