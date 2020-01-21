@@ -105,7 +105,7 @@ class Product {
       const activeProducts = document.querySelectorAll(select.all.menuProductsActive);
       console.log('found active products: ', activeProducts);
       /* START LOOP: for each active product */
-      for (let activeProduct of activeProducts) {
+      for (let activeProduct in activeProducts) {
         /* START: if the active product isn't the element of thisProduct */
         if (activeProduct !== thisProduct.element) {
           /* remove class active for the active product */
@@ -143,17 +143,15 @@ class Product {
     const thisProduct = this;
     const formData = utils.serializeFormToObject(thisProduct.form);
     console.log('formData', formData);
-    thisProduct.params = {};
+
     let price = thisProduct.data.price;
-
-
     /*START LOOP: for each paramId in thisProduct.data.params*/
-    for (let paramId of thisProduct.data.params) {
+    for (let paramId in thisProduct.data.params) {
       /*save the element in thisProduct.data.params with key paramId as const param */
       const param = thisProduct.data.params[paramId];
 
       /*START LOOP: for each optionId in param.options*/
-      for (let optionId of param.options) {
+      for (let optionId in param.options) {
         /* save the element in param.options with key optionId as const option */
         const option = param.options[optionId];
         const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
@@ -170,10 +168,8 @@ class Product {
           price = price - option.price;
           /* END ELSE IF: if option is not selected and option is default */
         }
-        thisProduct.priceElem.innerHTML = price;
-        console.log('final price', price);
         /* END LOOP: for each optionId in param.options */
-        const image = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
+        const image = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
         /* start if/else: SELECTED OPTION - IMAGES have class in classNames.menuProduct.imageVisible*/
         if (optionSelected && image) {
           image.classList.add(classNames.menuProduct.imageVisible);
@@ -183,6 +179,7 @@ class Product {
         }
       }
     }
+    thisProduct.priceElem.innerHTML = price;
   }
 }
 
