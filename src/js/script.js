@@ -189,7 +189,7 @@ class Product {
       }
     }
   }
-  }
+}
 
 /* add class for amount calculations */
 class AmountWidget{
@@ -197,6 +197,7 @@ class AmountWidget{
     const thisWidget = this;
     thisWidget.getElements(element);
     thisWidget.setValue(thisWidget.input.value);
+    thisWidget.initActions();
     console.log('amount widget', thisWidget);
     console.log('constructor arguments', element);
   }
@@ -209,29 +210,37 @@ class AmountWidget{
     thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
   }
 
-setValue(value){
-  const thisWidget=this;
-  const newValue = parseInt(value);
+  setValue(value){
+    const thisWidget=this;
+    const newValue = parseInt(value);
 
-  //zapisuje we wlasciwościach thisWidget.value wartość przekazanego argumentu po przek.na liczbę
-  thisWidget.value = newValue;
-  thisWidget.input.value = thisWidget.value;
+    //zapisuje we wlasciwościach thisWidget.value wartość przekazanego argumentu po przek.na liczbę
+    thisWidget.value = newValue;
+    thisWidget.announce(); /*???*/
+    thisWidget.input.value = thisWidget.value;
+  }
+  initActions(){ 
+    const thisWidget = this;
+    thisWidget.input.addEventListener('change', function(){  //handler używa metody setValue z wartością input
+      thisWidget.setValue=thisWidget.input.value;
+    });
+    thisWidget.linkDecrease.addEventListener('click', function(){
+      event.preventDefault();
+      thisWidget.setValue(thisWidget.value -1);
+    });
+    thisWidget.linkIncrease.addEventListener('click', function(){
+      event.preventDefault();
+      thisWidget.setValue(thisWidget.value+1);
+    });
+  }
+  announce(){  //tworzy instancje klasy Event
+    const thisWidget=this;
+    const event = new Event('updated');
+    thisWidget.element.dispatchEvent(event);
+  
+  }
 }
-initActions(){
- 
-thisWidget.input.addEventListener('change', function(){  //handler używa metody setValue z wartością input
-  thisWidget.setValue=thisWidget.input.value;
-});
-thisWidget.linkDecrease.addEventListener('click', function(){
-  event.preventDefault();
-  thisWidget.setValue(thisWidget.value -1);
-});
-thisWidget.linkIncrease.addEventListener('click', function(){
-event.preventDefault();
-thisWidget.setValue(thisWidget.value+1);
-});
-}
-}
+
 const app = {
   initMenu: function () {
     const thisApp = this;
