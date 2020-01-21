@@ -59,6 +59,7 @@ class Product {
     thisProduct.getElements();
     thisProduct.initAccordion();
     thisProduct.initOrderForm();
+    thisProduct.initAmountWidget();
     thisProduct.processOrder();
   }
 
@@ -85,7 +86,7 @@ class Product {
     thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
     thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
     thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-    //thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
+    thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
   }
 
   initAccordion() {
@@ -138,7 +139,10 @@ class Product {
       thisProduct.processOrder();
     });
   }
-
+  initAmountWidget(){   //metoda, tworzy instancję klasy AmountWidget i zapisuje ją we właściwości produktu
+    const thisProduct=this;
+    thisProduct.amountWIdget = new AmountWidget(thisProduct.amountWidgetElem);
+  }
   processOrder() {
     const thisProduct = this;
     const formData = utils.serializeFormToObject(thisProduct.form);
@@ -170,7 +174,6 @@ class Product {
         }
         /* END LOOP: for each optionId in param.options */
         const images = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
-        console.log('image', images);
         /* start if/else: SELECTED OPTION - IMAGES have class in classNames.menuProduct.imageVisible*/
         if (optionSelected) {
           for (let image of images) {
@@ -181,22 +184,54 @@ class Product {
           for (let image of images) {
             image.classList.remove(classNames.menuProduct.imageVisible);
           }
+        }
+        thisProduct.priceElem.innerHTML = price;
+      }
     }
-    thisProduct.priceElem.innerHTML = price;
   }
-}
   }
-}
 
 /* add class for amount calculations */
-// class AmountWidget{
-//   constructor(element){
-//     const thisWidget = this;
-//     console.log('amount widget', thisWidget);
-//     console.log('constructor arguments', element);
-//   }
-// }
+class AmountWidget{
+  constructor(element){
+    const thisWidget = this;
+    thisWidget.getElements(element);
+    thisWidget.setValue(thisWidget.input.value);
+    console.log('amount widget', thisWidget);
+    console.log('constructor arguments', element);
+  }
 
+  getElements(element){ //ta metoda odnajduje wszystkie DOM; przekazujemy jej argument 'element' otrzymany przez konstruktor
+    const thisWidget = this;  
+    thisWidget.element = element;
+    thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+    thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+    thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+  }
+
+setValue(value){
+  const thisWidget=this;
+  const newValue = parseInt(value);
+
+  //zapisuje we wlasciwościach thisWidget.value wartość przekazanego argumentu po przek.na liczbę
+  thisWidget.value = newValue;
+  thisWidget.input.value = thisWidget.value;
+}
+initActions(){
+ 
+thisWidget.input.addEventListener('change', function(){  //handler używa metody setValue z wartością input
+  thisWidget.setValue=thisWidget.input.value;
+});
+thisWidget.linkDecrease.addEventListener('click', function(){
+  event.preventDefault();
+  thisWidget.setValue(thisWidget.value -1);
+});
+thisWidget.linkIncrease.addEventListener('click', function(){
+event.preventDefault();
+thisWidget.setValue(thisWidget.value+1);
+});
+}
+}
 const app = {
   initMenu: function () {
     const thisApp = this;
