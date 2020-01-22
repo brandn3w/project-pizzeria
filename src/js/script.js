@@ -220,16 +220,13 @@ class AmountWidget {
     const thisWidget = this;
     const newValue = parseInt(value);
 
-    //zapisuje we wlasciwościach thisWidget.value wartość przekazanego argumentu po przek.na liczbę
-    thisWidget.value = newValue;
-    thisWidget.input.value = thisWidget.value;
-    thisWidget.announce();
+    //zapisuje we wlasciwościach thisWidget.value wartość przekazanego argumentu po przek.na liczbe
 
     /* TODO: Add validation */
 
     if (newValue != thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
-    thisWidget.value = newValue;
-     
+      thisWidget.value = newValue;
+
     }
     thisWidget.input.value = thisWidget.value;
     thisWidget.announce();
