@@ -139,9 +139,12 @@ class Product {
       thisProduct.processOrder();
     });
   }
-  initAmountWidget(){   //metoda, tworzy instancję klasy AmountWidget i zapisuje ją we właściwości produktu
-    const thisProduct=this;
-    thisProduct.amountWIdget = new AmountWidget(thisProduct.amountWidgetElem);
+  initAmountWidget() {   //metoda, tworzy instancję klasy AmountWidget i zapisuje ją we właściwości produktu
+    const thisProduct = this;
+    thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+    thisProduct.amountWidgetElem.addEventListener('updated', function () {
+      thisProduct.processOrder();
+    });
   }
   processOrder() {
     const thisProduct = this;
@@ -163,7 +166,6 @@ class Product {
         if (optionSelected && !option.default) {
           /* add price of option to variable price  */
           price = price + option.price;
-          console.log('new price:', option.price);
           /*END loop: for all param's OPTIONS*/
         }
         /* START ELSE IF: if option is not selected and option is default */
@@ -184,7 +186,10 @@ class Product {
           for (let image of images) {
             image.classList.remove(classNames.menuProduct.imageVisible);
           }
+
         }
+        /*multiply price by amount*/
+        price *= thisProduct.amountWidget.value;
         thisProduct.priceElem.innerHTML = price;
       }
     }
@@ -192,52 +197,63 @@ class Product {
 }
 
 /* add class for amount calculations */
-class AmountWidget{
-  constructor(element){
+class AmountWidget {
+  constructor(element) {
     const thisWidget = this;
     thisWidget.getElements(element);
+    thisWidget.value = settings.amountWidget.defaultValue;
     thisWidget.setValue(thisWidget.input.value);
     thisWidget.initActions();
     console.log('amount widget', thisWidget);
     console.log('constructor arguments', element);
   }
 
-  getElements(element){ //ta metoda odnajduje wszystkie DOM; przekazujemy jej argument 'element' otrzymany przez konstruktor
-    const thisWidget = this;  
+  getElements(element) { //ta metoda odnajduje wszystkie DOM; przekazujemy jej argument 'element' otrzymany przez konstruktor
+    const thisWidget = this;
     thisWidget.element = element;
     thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
     thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
     thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
   }
 
-  setValue(value){
-    const thisWidget=this;
+  setValue(value) {
+    const thisWidget = this;
     const newValue = parseInt(value);
 
     //zapisuje we wlasciwościach thisWidget.value wartość przekazanego argumentu po przek.na liczbę
     thisWidget.value = newValue;
-    thisWidget.announce(); /*???*/
     thisWidget.input.value = thisWidget.value;
+    thisWidget.announce();
+
+    /* TODO: Add validation */
+
+    if (newValue != thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
+    thisWidget.value = newValue;
+     
+    }
+    thisWidget.input.value = thisWidget.value;
+    thisWidget.announce();
   }
-  initActions(){ 
+
+  initActions() {
     const thisWidget = this;
-    thisWidget.input.addEventListener('change', function(){  //handler używa metody setValue z wartością input
-      thisWidget.setValue=thisWidget.input.value;
+    thisWidget.input.addEventListener('change', function () {  //handler używa metody setValue z wartością input
+      thisWidget.setValue = thisWidget.input.value;
     });
-    thisWidget.linkDecrease.addEventListener('click', function(){
+    thisWidget.linkDecrease.addEventListener('click', function () {
       event.preventDefault();
-      thisWidget.setValue(thisWidget.value -1);
+      thisWidget.setValue(thisWidget.value - 1);
     });
-    thisWidget.linkIncrease.addEventListener('click', function(){
+    thisWidget.linkIncrease.addEventListener('click', function () {
       event.preventDefault();
-      thisWidget.setValue(thisWidget.value+1);
+      thisWidget.setValue(thisWidget.value + 1);
     });
   }
-  announce(){  //tworzy instancje klasy Event
-    const thisWidget=this;
+  announce() {  //tworzy instancje klasy Event
+    const thisWidget = this;
     const event = new Event('updated');
     thisWidget.element.dispatchEvent(event);
-  
+
   }
 }
 
