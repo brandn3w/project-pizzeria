@@ -148,6 +148,10 @@ class Product {
       }
       /* END: click event listener to trigger */
     });
+    addToCart(){ //to nie działa
+const thisProduct = this;
+app.cart.add(thisProduct);
+    }
   }
 
 
@@ -298,13 +302,17 @@ class Cart {
     thisCart.dom = {};
     thisCart.dom.wrapper = element;
     thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
-}
+  }
   initActions(){
     const thisCart = this;
     thisCart.dom.toggleTrigger.addEventListener('click', function(){
       thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
     });
-}
+  }
+  add(menuProduct){
+  //const thisCart=this;
+    console.log('adding product', menuProduct);
+  }
 }
 const app = {
   initMenu: function () {
