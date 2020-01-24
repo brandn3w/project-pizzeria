@@ -332,7 +332,9 @@ class Cart {
         /* add DOM to product list */
     thisCart.dom.productList.appendChild(generatedDOM);
 
-    console.log('adding product', menuProduct);
+    thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+
+    thisCart.update();   
   }
 }
 class CartProduct {
