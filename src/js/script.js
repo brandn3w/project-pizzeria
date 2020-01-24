@@ -335,6 +335,29 @@ class Cart {
     console.log('adding product', menuProduct);
   }
 }
+class CartProduct {
+  constructor(menuProduct, element) {
+const thisCartProduct = this;
+thisCartProduct.id = menuProduct.id;//dla tych właściwości: id, name, price, priceSingle, amount???
+thisCartProduct.name =menuProduct.name;
+thisCartProduct.price = menuProduct.price; 
+thisCartProduct.priceSingle = menuProduct.priceSingle;
+thisCartProduct.amount = menuProduct.amount;
+thisCartProduct.params = JSON.parse(JSON.strungify(menuProduct.params));
+thisCartProduct.getElements(element);
+console.log('cart product', thisCartProduct);
+}
+
+getElements(element){
+  thisCartProduct = this;
+  thisCartProduct.dom = {};
+thiscartproduct.dom.wrapper = element;
+thisProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
+thisProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
+thisProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
+thisProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+}
+}
 const app = {
   initMenu: function () {
     const thisApp = this;
