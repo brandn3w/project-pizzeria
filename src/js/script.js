@@ -328,7 +328,7 @@ class Cart {
       thisCart.update();
     });
     thisCart.dom.productList.addEventListener('remove', function(){
-
+thisCart.remove(event.detail.cartProduct);
     });
   }
   add(menuProduct) {
@@ -360,6 +360,11 @@ class Cart {
         elem.innerHTML = thisCart[key];
       }
     }
+  }
+  Cart.remove(cart.Product){
+    const thisCart = this;
+    const index = cartProduct[thisCart.products];
+
   }
 }
 class CartProduct { //pojedyncza pozycja w koszyku
