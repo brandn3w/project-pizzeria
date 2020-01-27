@@ -161,7 +161,6 @@ class Product {
     thisProduct.amount = thisProduct.amountWidget.value;
     app.cart.add(thisProduct);
   }
-
   initOrderForm() {
     const thisProduct = this;
     console.log(thisProduct);
@@ -179,6 +178,13 @@ class Product {
     thisProduct.cartButton.addEventListener('click', function (event) {
       event.preventDefault();
       thisProduct.addToCart();
+      thisProduct.processOrder();
+    });
+  }
+  initAmountWidget() {   //metoda, tworzy instancję klasy AmountWidget i zapisuje ją we właściwości produktu
+    const thisProduct = this;
+    thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+    thisProduct.amountWidgetElem.addEventListener('updated', function () {
       thisProduct.processOrder();
     });
   }
@@ -239,19 +245,6 @@ class Product {
     /* set the contents of thisProduct.priceElem to be the value of variable price */
     thisProduct.priceElem.innerHTML = thisProduct.price;
   }
-}
-initAmountWidget() {   //metoda, tworzy instancję klasy AmountWidget i zapisuje ją we właściwości produktu
-  const thisProduct = this;
-  thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
-  thisProduct.amountWidgetElem.addEventListener('updated', function () {
-    thisProduct.processOrder();
-  });
-}
-addToCart() {
-  const thisProduct = this;
-  thisProduct.name = thisProduct.data.name;
-  thisProduct.amount = thisProduct.amountWidget.value;
-  app.cart.add(thisProduct);
 }
 
 class AmountWidget {
