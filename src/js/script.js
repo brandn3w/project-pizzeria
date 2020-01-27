@@ -157,7 +157,6 @@ class Product {
     app.cart.add(thisProduct);
   }
 
-
   initOrderForm() {
     const thisProduct = this;
     console.log(thisProduct);
