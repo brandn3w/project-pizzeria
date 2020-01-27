@@ -152,8 +152,8 @@ class Product {
 
   addToCart() {
     const thisProduct = this;
-    thisProduct.data.name = thisProduct.name;
-    thisProduct.amountWidget.value = thisProduct.amount;
+    thisProduct.name = thisProduct.data.name;
+    thisProduct.amount = thisProduct.amountWidget.value;
     app.cart.add(thisProduct);
   }
 
@@ -188,7 +188,6 @@ class Product {
   processOrder() {
     const thisProduct = this;
     const formData = utils.serializeFormToObject(thisProduct.form);
-    console.log('formData', formData);
     thisProduct.params = {};
     let price = thisProduct.data.price;
     /*START LOOP: for each paramId in thisProduct.data.params*/
@@ -234,14 +233,14 @@ class Product {
           }
 
         }
-        /*multiply price by amount*/
-        thisProduct.priceSingle = price;
-        thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
-
-        /* set the contents of thisProduct.priceElem to be the value of variable price */
-        thisProduct.priceElem.innerHTML = thisProduct.price;
       }
     }
+    /*multiply price by amount*/
+    thisProduct.priceSingle = price;
+    thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
+
+    /* set the contents of thisProduct.priceElem to be the value of variable price */
+    thisProduct.priceElem.innerHTML = thisProduct.price;
   }
 }
 
@@ -251,7 +250,7 @@ class AmountWidget {
     const thisWidget = this;
     thisWidget.getElements(element);
     thisWidget.value = settings.amountWidget.defaultValue;
-    thisWidget.setValue(thisWidget.input.value);
+    thisWidget.setValue(thisWidget.input.value || settings.amountWidget.defaultValue);
     thisWidget.initActions();
     console.log('amount widget', thisWidget);
     console.log('constructor arguments', element);
@@ -321,7 +320,7 @@ class Cart {
     thisCart.renderTotalsKeys = ['totalNumber', 'totalPrice', 'subtotalPrice', 'deliveryFee'];
 
     for (let key of thisCart.renderTotalsKeys) {
-      thisCart.dom[key] = thisCart.dom.wrapper.querySelectorAll(select.cart[key]);  
+      thisCart.dom[key] = thisCart.dom.wrapper.querySelectorAll(select.cart[key]);
     }
   }
   initActions() {
@@ -376,7 +375,7 @@ class Cart {
     thisCart.update();
   }
 }
-class CartProduct { 
+class CartProduct {
   constructor(menuProduct, element) {
     const thisCartProduct = this;
     thisCartProduct.id = menuProduct.id;
