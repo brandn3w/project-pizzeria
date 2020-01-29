@@ -1,4 +1,6 @@
-const select = {
+
+/* global Handlebars */
+export const select = {
   templateOf: {
     menuProduct: '#template-menu-product',
     cartProduct: '#template-cart-product', // CODE ADDED
@@ -48,7 +50,7 @@ const select = {
   },
   // CODE ADDED END
 };
-const classNames = {
+export const classNames = {
   menuProduct: {
     wrapperActive: 'active',
     imageVisible: 'active',
@@ -59,7 +61,7 @@ const classNames = {
   },
   // CODE ADDED END
 };
-const settings = {
+export const settings = {
   amountWidget: {
     defaultValue: 1,
     defaultMin: 1,
@@ -77,7 +79,7 @@ const settings = {
   },
 };
 
-const templates = {
+export const templates = {
   menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   // CODE ADDED START
   cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
