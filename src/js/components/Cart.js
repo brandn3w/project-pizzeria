@@ -1,7 +1,7 @@
 
 import CartProduct from './CartProduct.js';
 import {select, classNames, templates, settings} from '../settings.js';
-import {utils} from './utils';
+import {utils} from '../utils.js';
 
 
 
