@@ -1,19 +1,22 @@
-import {select, templates} from '../settings.js';
-import AmountWidget from './AmountWidget.js';
+
 
 class BaseWidget{
 
-    constructor(wrapperElement, initialValue){
+  constructor(wrapperElement, initialValue){
     const thisWidget = this;
+
     thisWidget.dom = {};
     thisWidget.dom.wrapper=wrapperElement;
-    thisWidget.correctValue = initialValue;
-    }
 
-get value(){
-  this value = this;
-}
-set value(value) {
+    thisWidget.correctValue = initialValue;
+  }
+
+  get value(){
+    const thisWidget = this;
+
+    return thisWidget.correctValue;
+  }
+  set value(value) {
     const thisWidget = this;
     const newValue = thisWidget.parseValue(value);
   
@@ -21,22 +24,20 @@ set value(value) {
       thisWidget.correctValue = newValue;
       thisWidget.announce();
     }
-      thisWidget.renderValue();  
+    thisWidget.renderValue();  
   }
-
   setValue(value){
-    thisWidget = this;
-    thisWidget.value - value;
+    const thisWidget = this;
+
+    thisWidget.value = value;
   }
   parseValue(value){
-    const thisWidget = this;
     return parseInt(value);
   }
   isValid(value){
-    const thisWidget = this;
-    return !isNaN(value)
+    return !isNaN(value);
   }
-  renderValue(value){
+  renderValue(){
     const thisWidget = this;
     thisWidget.dom.wrapper.innerHTML = thisWidget.value; 
   }
