@@ -141,15 +141,14 @@ const app = {
      
   
       for (let dot of dots) {
-        console.log(dot.id);
-        if (dot.id == "dot-"+ (i + 1)) { // +1 ??
-          console.log(dot.id);
+      
+        if (dot.id == 'dot-'+ (i + 1)) { 
+        
           dot.classList.add('active');
         } else {
           dot.classList.remove('active');
         }
         title.innerHTML = review[i].title;
-
         text.innerHTML = review[i].text;
         name.innerHTML = review[i].name;
       }
