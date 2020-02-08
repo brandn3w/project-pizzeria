@@ -3,7 +3,8 @@ body {
 }
 
 .homepage-wrapper-container {
-  margin: 39px 324px;
+  align-self: center;
+  margin: 0 auto;
   max-width: 700px;
   padding: ($base-size * 6) ($base-size * 4);
   background: #fff;
@@ -64,7 +65,6 @@ body {
   -webkit-transition: all 0.4s ease-in-out 0s;
   -moz-transition: all 0.4s ease-in-out 0s;
   transition: all 0.4s ease-in-out 0s;
- 
 }
 
 .link-image-holder:hover .hovering-text {
@@ -132,12 +132,23 @@ body {
   margin-left: 29px;
 }
 
+.review-title {
+  text-transform: uppercase;
+}
+
+.review-name {
+  font-style: italic;
+  font-weight: $font-normal;
+}
+
 .carousel-dots {
+  margin-top: 20px;
   flex-basis: 100%;
   text-align: center;
   font-size: 10px;
   transition: 1s;
   color: $color-dark;
+  letter-spacing: 5px;
 
   .active {
     color: #b2bec3;
@@ -171,17 +182,17 @@ body {
   height: 192px;
   width: 192px;
   border-radius: $radius;
-  
 }
 
 .overlay {
   position: absolute;
   transition: all 0.3s ease;
   opacity: 0;
-  background-color: lightgray;
+  background-color: black;
   height: 192px;
   width: 192px;
-transform: translateY(-103%);
+  transform: translateY(-103%);
+  border-radius: $radius;
 
   i {
     top: 50%;
@@ -193,11 +204,10 @@ transform: translateY(-103%);
 }
 
 .gal-image-wrapper:hover .overlay {
-  opacity: 0,1;
+  opacity: 0.5;
 }
 
-
-.gallery-icon {
+.icon-overlay {
   color: $color-light;
   position: absolute;
   font-size: 22px;
@@ -205,24 +215,24 @@ transform: translateY(-103%);
 
   i {
     display: inline-block;
-    left: 5%;
+    left: 40%;
     top: 40%;
-    transform: translate(-50%);
+    letter-spacing: 4px;
     position: relative;
   }
 }
 
-.gallery-image:hover > .gallery-icon {
-  display: inline-block;
-  opacity: 1;
-}
-
-.gallery-icon > .fa-heart:hover {
+.icon-overlay > .fa-heart:hover {
   color: $color-main;
   opacity: 1;
 }
 
-.gallery-icon > .fa-share-alt:hover {
-  color: $color-main;
+.icon-overlay > .fa-share-alt:hover {
+  color: $color-light;
   opacity: 1;
+}
+
+.footer-text {
+  margin-top: 30px;
+  color: $color-main;
 }
