@@ -7,6 +7,7 @@ import HourPicker from './HourPicker.js';
 class Booking {
   constructor(bookingWidget) {
     const thisBooking = this;
+    thisBooking.reservation = [];
     thisBooking.render(bookingWidget);
     thisBooking.initWidgets();
     thisBooking.getData();
@@ -72,7 +73,7 @@ class Booking {
       eventsCurrent: settings.db.url + '/' + settings.db.event + '?' + params.eventsCurrent.join('&'),
       eventsRepeat: settings.db.url + '/' + settings.db.event + '?' + params.eventsRepeat.join('&'),
     };
-    console.log('Urls', urls);
+    //console.log('Urls', urls);
 
     Promise.all([
       fetch(urls.booking),
@@ -118,6 +119,35 @@ class Booking {
     console.log('booked', thisBooking.booked);  
     thisBooking.updateDOM();
   }
+
+  rangeSliderColor() {
+    const thisBooking = this;
+
+    const bookedHours = thisBooking.booked[thisBooking.date];
+    const sliderDataColors = [];
+
+    thisBooking.dom.rangeSlider = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.slider);
+
+    const slider = thisBooking.dom.rangeSlider;
+
+    for (let bookedHour in bookedHours) {
+      const firstOfInterval = ((bookedHour - 12) * 100) / 12;
+      const secondOfInterval = (((bookedHour - 12) + .5) * 100) / 12;
+      if (bookedHour < 24) {
+        if (bookedHours[bookedHour].length <= 1) {
+          sliderDataColors.push('/*' + bookedHour + '*/green ' + firstOfInterval + '%, green ' + secondOfInterval + '%');
+        } else if (bookedHours[bookedHour].length === 2) {
+          sliderDataColors.push('/*' + bookedHour + '*/orange ' + firstOfInterval + '%, orange ' + secondOfInterval + '% ');
+        } else if (bookedHours[bookedHour].length === 3) {
+          sliderDataColors.push('/*' + bookedHour + '*/red ' + firstOfInterval + '%, red ' + secondOfInterval + '%');
+        }
+      }
+    }
+    sliderDataColors.sort();
+    const greenOrangeRedString = sliderDataColors.join();
+    slider.style.background = 'linear-gradient(to right, ' + greenOrangeRedString + ')';
+  }
+  
   makeBooked(date, hour, duration, table) {
     const thisBooking = this;
 
