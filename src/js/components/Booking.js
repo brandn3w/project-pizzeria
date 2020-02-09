@@ -255,6 +255,7 @@ thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId > -1)
         table.classList.remove(classNames.booking.tableBooked);
       }
     }
+    thisBooking.rangeSliderColor();
   }
 }
 export default Booking;
